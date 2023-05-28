@@ -1,0 +1,16 @@
+{
+  buecher {
+    id
+    version
+    isbn
+    rating
+    lieferbar
+    datum
+    homepage
+    schlagwoerter
+    art
+    titel {
+      titel
+    }
+  }
+}

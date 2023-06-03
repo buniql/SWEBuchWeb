@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -131,3 +132,11 @@ export type TitelInput = {
   titel: Scalars['String']['input'];
   untertitel?: InputMaybe<Scalars['String']['input']>;
 };
+
+export type BuecherQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BuecherQuery = { __typename?: 'Query', buecher?: Array<{ __typename?: 'Buch', id: string, version: number, isbn: string, rating?: number | null, lieferbar?: boolean | null, datum?: string | null, homepage?: string | null, schlagwoerter?: Array<string | null> | null, art?: Art | null, titel: { __typename?: 'Titel', titel: string } }> | null };
+
+
+export const BuecherDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"buecher"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buecher"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"isbn"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}},{"kind":"Field","name":{"kind":"Name","value":"lieferbar"}},{"kind":"Field","name":{"kind":"Name","value":"datum"}},{"kind":"Field","name":{"kind":"Name","value":"homepage"}},{"kind":"Field","name":{"kind":"Name","value":"schlagwoerter"}},{"kind":"Field","name":{"kind":"Name","value":"art"}},{"kind":"Field","name":{"kind":"Name","value":"titel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"titel"}}]}}]}}]}}]} as unknown as DocumentNode<BuecherQuery, BuecherQueryVariables>;

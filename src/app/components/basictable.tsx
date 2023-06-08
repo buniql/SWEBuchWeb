@@ -1,8 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Buch } from "@/gql/graphql";
 import getBuecher from "../query";
+
+interface DataTableProps {
+  search: string;
+}
 
 // Format der Tabelle/Zeilen
 function createRow(
@@ -44,13 +48,14 @@ const columns: GridColDef[] = [
   { field: "art", headerName: "Art", width: 200 },
 ];
 
-export default function DataTable() {
+const DataTable: React.FC<DataTableProps> = ({ search }) => {
   const [rows, setRows] = useState<any[]>([]);
 
   useEffect(() => {
+    console.log("Fetch new Data");
     const fetchData = async () => {
       try {
-        const buecherList: Buch[] = await getBuecher();
+        const buecherList: Buch[] = await getBuecher(search);
 
         const mappedRows = buecherList.map((buch) =>
           createRow(
@@ -74,11 +79,13 @@ export default function DataTable() {
     };
 
     fetchData();
-  }, []);
+  }, [search]);
 
   return (
     <div style={{ height: 400, width: "100%" }}>
       <DataGrid rows={rows} columns={columns} />
     </div>
   );
-}
+};
+
+export default DataTable;

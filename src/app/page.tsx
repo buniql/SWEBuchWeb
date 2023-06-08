@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import DataTable from "./components/basictable";
+import SearchBoxWithDataTable from "./components/searchQuery";
 
 export default function Home({ data }: any) {
   console.log(data);
@@ -24,7 +24,7 @@ export default function Home({ data }: any) {
       </div>
 
       <div className={styles.center}>
-        <DataTable />
+        <SearchBoxWithDataTable />
       </div>
 
       <div className={styles.grid}>

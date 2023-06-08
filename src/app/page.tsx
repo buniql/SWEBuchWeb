@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import BasicTable from "./components/basictable";
+import DataTable from "./components/basictable";
 
 export default function Home({ data }: any) {
   console.log(data);
@@ -13,18 +13,18 @@ export default function Home({ data }: any) {
           rel="noopener noreferrer"
         >
           <Image
-            src="/vercel.svg"
-            alt="Vercel Logo"
+            src="/buchweblogo.png"
+            alt="buchweblogo"
             className={styles.vercelLogo}
             width={100}
-            height={24}
+            height={100}
             priority
           />
         </a>
       </div>
 
       <div className={styles.center}>
-        <BasicTable />
+        <DataTable />
       </div>
 
       <div className={styles.grid}>

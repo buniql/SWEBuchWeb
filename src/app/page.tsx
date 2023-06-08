@@ -16,8 +16,8 @@ export default function Home({ data }: any) {
             src="/buchweblogo.png"
             alt="buchweblogo"
             className={styles.vercelLogo}
-            width={100}
-            height={100}
+            width={128}
+            height={128}
             priority
           />
         </a>

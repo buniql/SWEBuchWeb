@@ -2,8 +2,8 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "./src/app/schema.graphql",
-  documents: "./src/app/buch.query.graphql",
+  schema: "./src/app/graphql-codegen/schema.graphql",
+  documents: "./src/app/graphql-codegen/buch.query.graphql",
   generates: {
     "src/gql/": {
       preset: "client",

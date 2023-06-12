@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Buch } from "@/gql/graphql";
-import getBuecher from "../query";
+import getBuecher from "../model/BuchQuery";
 
 interface DataTableProps {
   search: string;

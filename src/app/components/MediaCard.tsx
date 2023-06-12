@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Rating from "@mui/material/Rating";
 import { Buch } from "@/gql/graphql";
-import getBuecher from "../query";
+import getBuecher from "../model/BuchQuery";
 
 interface MediaCardProps {
   buch: Buch;

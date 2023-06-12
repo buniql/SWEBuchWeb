@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import SearchBar from "../components/SearchBar";
-import MediaCardGrid from "../components/MediaCard";
+import SearchBar from "./SearchBar";
+import MediaCardGrid from "./MediaCard";
 
 export default function SearchBoxWithDataTable() {
   const [searchQuery, setSearchQuery] = useState("");

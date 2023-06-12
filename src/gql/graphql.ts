@@ -75,11 +75,19 @@ export type BuchUpdateInput = {
   version?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type LoginResult = {
+  __typename?: 'LoginResult';
+  expiresIn: Scalars['String']['output'];
+  roles: Array<Maybe<Scalars['String']['output']>>;
+  token: Scalars['String']['output'];
+};
+
 /** Funktionen, um Bücher neu anzulegen, zu aktualisieren oder zu löschen */
 export type Mutation = {
   __typename?: 'Mutation';
   create?: Maybe<Scalars['String']['output']>;
   delete?: Maybe<Scalars['Boolean']['output']>;
+  login?: Maybe<LoginResult>;
   update?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -93,6 +101,13 @@ export type MutationCreateArgs = {
 /** Funktionen, um Bücher neu anzulegen, zu aktualisieren oder zu löschen */
 export type MutationDeleteArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+/** Funktionen, um Bücher neu anzulegen, zu aktualisieren oder zu löschen */
+export type MutationLoginArgs = {
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
 

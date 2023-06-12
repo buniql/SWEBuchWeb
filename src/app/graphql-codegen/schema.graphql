@@ -34,6 +34,9 @@ type Mutation {
   update(input: BuchUpdateInput!): Int
 
   delete(id: ID!): Boolean
+
+  #Login für Auth
+  login(username: String!, password: String!): LoginResult
 }
 
 "Daten zum Titel eines Buches"
@@ -104,4 +107,11 @@ input BuchUpdateInput {
   datum: String
   homepage: String
   schlagwoerter: [String]
+}
+
+#Login für Auth
+type LoginResult {
+  token: String!
+  expiresIn: String!
+  roles: [String]!
 }

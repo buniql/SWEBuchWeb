@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import SearchBoxWithDataTable from "./components/searchQuery";
+import MediaCard from "./components/MediaCard";
 
 export default function Home({ data }: any) {
   console.log(data);
@@ -23,7 +24,7 @@ export default function Home({ data }: any) {
         </a>
       </div>
 
-      <div className={styles.center}>
+      <div className={styles.left}>
         <SearchBoxWithDataTable />
       </div>
 

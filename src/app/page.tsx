@@ -1,8 +1,6 @@
-import Image from "next/image";
 import styles from "./page.module.css";
-import SearchBoxWithDataTable from "./view_model/SearchBoxWithDataTable";
-import ResponsiveAppBar from "./components/ResponsiveAppBar";
-import BuchForm from "./view_model/CreateBuch";
+import ResponsiveAppBar from "./view_model/ResponsiveAppBar";
+import SearchBoxWithMediaCards from "./view_model/SearchBoxWithMediaCards";
 
 export default function Home({ data }: any) {
   console.log(data);
@@ -13,7 +11,7 @@ export default function Home({ data }: any) {
       </div>
 
       <div className={styles.main}>
-        <BuchForm />
+        <SearchBoxWithMediaCards />
       </div>
     </main>
   );

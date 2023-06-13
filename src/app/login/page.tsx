@@ -1,19 +1,12 @@
 "use client";
 import styles from "../page.module.css";
-import ResponsiveAppBar from "../view_model/ResponsiveAppBar";
 import { useState } from "react";
-import SearchBoxWithMediaCards from "../view_model/SearchBoxWithMediaCards";
+import SignIn from "../view_model/SignIn";
 
 export default function Home() {
   const initPage = (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <ResponsiveAppBar />
-      </div>
-
-      <div className={styles.main}>
-        <SearchBoxWithMediaCards />
-      </div>
+      <SignIn />
     </main>
   );
 

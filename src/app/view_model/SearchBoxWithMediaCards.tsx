@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
-import DataTable from "./DataTable";
+import MediaCardGrid from "./MediaCard";
 
-export default function SearchBoxWithDataTable() {
+export default function SearchBoxWithMediaCards() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchInputChange = (value: string) => {
@@ -16,7 +16,7 @@ export default function SearchBoxWithDataTable() {
         <SearchBar onSearch={handleSearchInputChange} />
       </div>
       <div style={{ flex: "1" }}>
-        <DataTable search={searchQuery} />
+        <MediaCardGrid search={searchQuery} />
       </div>
     </div>
   );

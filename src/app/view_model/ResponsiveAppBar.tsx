@@ -14,7 +14,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-const pages = ["Buch-Suche", "Tabelle", "Login"];
+const pages = ["MediaCard", "Tabelle", "Login"];
 const settings = ["Profil", "Abmelden"];
 
 function ResponsiveAppBar() {
@@ -80,12 +80,12 @@ function ResponsiveAppBar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
+                href={`/${page.toLowerCase()}`} // Set the href attribute
               >
                 {page}
               </Button>
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Profil anzeigen">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

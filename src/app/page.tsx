@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import SearchBoxWithDataTable from "./view_model/SearchBoxWithDataTable";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
+import BuchForm from "./view_model/CreateBuch";
 
 export default function Home({ data }: any) {
   console.log(data);
@@ -12,7 +13,7 @@ export default function Home({ data }: any) {
       </div>
 
       <div className={styles.main}>
-        <SearchBoxWithDataTable />
+        <BuchForm />
       </div>
     </main>
   );

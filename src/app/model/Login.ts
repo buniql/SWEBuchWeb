@@ -1,17 +1,16 @@
 import { LoginResult } from "@/gql/graphql";
 import ApolloClient from "apollo-boost";
 import { gql } from "apollo-boost";
+import { setCookie } from "cookies-next";
 
-//Apollo Client konfiguration - uri des Buch-Backends
 const client = new ApolloClient({
   uri: "https://localhost:3000/graphql",
 });
 
 const login = async (username: string, password: string) => {
-  //Wenn nach allen Büchern gesucht wird
-  let buecherQuery = gql`
-    mutation {
-      login(username: ${username}, password: ${password}) {
+  const loginMutation = gql`
+    mutation Login($username: String!, $password: String!) {
+      login(username: $username, password: $password) {
         token
         expiresIn
         roles
@@ -20,14 +19,19 @@ const login = async (username: string, password: string) => {
   `;
 
   try {
-    const response = await client.query({
-      query: buecherQuery,
+    const response = await client.mutate({
+      mutation: loginMutation,
+      variables: { username, password },
     });
 
-    const login: LoginResult = response.data.login;
+    const loginResult: LoginResult = response.data.login;
+
+    setCookie("auth", loginResult.token);
+
+    return loginResult;
   } catch (error) {
-    console.log("Error logging in:" + error);
-    return;
+    console.log("Error logging in:", error);
+    return undefined;
   }
 };
 

@@ -22,6 +22,7 @@ import {
   Titel,
 } from "@/gql/graphql";
 import writeBuch from "../model/BuchMutation";
+import TokenContext from "../view_model/LoginForm";
 
 export default function BuchForm() {
   const [isbn, setIsbn] = React.useState<string>("");
@@ -41,6 +42,8 @@ export default function BuchForm() {
     titel: "",
     untertitel: "",
   });
+
+  const token = React.useContext(TokenContext);
 
   const handleIsbnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsbn(event.target.value);
@@ -116,7 +119,7 @@ export default function BuchForm() {
       titel,
     };
 
-    writeBuch(formData);
+    writeBuch(formData, token);
 
     console.log(formData);
 

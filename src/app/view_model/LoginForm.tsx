@@ -13,7 +13,7 @@ import login from "../model/Login";
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function LoginForm() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -24,10 +24,12 @@ export default function SignIn() {
         data.get("password") as string
       );
 
-      // Handle the login result here
-      console.log(result);
+      if (result !== undefined) {
+        console.log(result);
+        window.location.href = "/create";
+      }
     } catch (error) {
-      console.log("Error logging in:" + error);
+      console.log("Error logging in: " + error);
     }
   };
 

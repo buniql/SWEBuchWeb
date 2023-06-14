@@ -1,8 +1,8 @@
 "use client";
 import styles from "../page.module.css";
-import SearchBoxWithDataTable from "../view_model/SearchBoxWithDataTable";
 import ResponsiveAppBar from "../view_model/ResponsiveAppBar";
 import { useState } from "react";
+import CreateBuch from "../view_model/CreateBuch";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
       </div>
 
       <div className={styles.main}>
-        <SearchBoxWithDataTable />
+        <CreateBuch />
       </div>
     </main>
   );

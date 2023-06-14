@@ -5,7 +5,7 @@ import { useState } from "react";
 import SearchBoxWithMediaCards from "../view_model/SearchBoxWithMediaCards";
 
 export default function Home() {
-  const initPage = (
+  return (
     <main className={styles.main}>
       <div className={styles.description}>
         <ResponsiveAppBar />
@@ -16,9 +16,4 @@ export default function Home() {
       </div>
     </main>
   );
-
-  const [loggedIn, logIn] = useState<boolean>(false);
-
-  const [content, setContent] = useState<any>(initPage);
-  return content;
 }

@@ -48,7 +48,7 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               flexGrow: 0,
               fontFamily: "monospace",

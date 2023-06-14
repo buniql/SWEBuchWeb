@@ -7,35 +7,21 @@ const client = new ApolloClient({
   uri: "https://localhost:3000/graphql",
 });
 
-const writeBuch = async (buch: BuchInput, token: string) => {
+const writeBuch = async (buch: BuchInput) => {
   const createBuchMutation = gql`
-    mutation CreateBuch($input: BuchInput!) {
-      create(input: $input) {
-        id
-        isbn
-        rating
-        art
-        preis
-        rabatt
-        lieferbar
-        datum
-        homepage
-        schlagwoerter
-        titel {
-          titel
-          untertitel
-        }
-      }
+    mutation CreateBuch($buchInput: BuchInput!) {
+      create(input: $buchInput)
     }
   `;
 
-  const authCookie = getCookie("key");
+  const authCookie = getCookie("auth");
+  console.log("authCookie: " + authCookie);
 
   try {
     const response = await client.mutate({
       mutation: createBuchMutation,
       variables: {
-        input: {
+        buchInput: {
           isbn: buch.isbn,
           rating: buch.rating,
           art: buch.art,

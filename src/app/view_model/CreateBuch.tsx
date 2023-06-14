@@ -7,6 +7,7 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -22,7 +23,6 @@ import {
   Titel,
 } from "@/gql/graphql";
 import writeBuch from "../model/BuchMutation";
-import TokenContext from "../view_model/LoginForm";
 
 export default function BuchForm() {
   const [isbn, setIsbn] = React.useState<string>("");
@@ -34,7 +34,7 @@ export default function BuchForm() {
     React.useState<InputMaybe<Scalars["Float"]["input"]>>();
   const [lieferbar, setLieferbar] = React.useState<boolean>(false);
   const [datum, setDatum] = React.useState<string>(
-    new Date().toLocaleDateString("de-DE")
+    new Date().toISOString().split("T")[0]
   );
   const [homepage, setHomepage] = React.useState<string>("");
   const [schlagwoerter, setSchlagwoerter] = React.useState<string[]>([]);
@@ -42,8 +42,6 @@ export default function BuchForm() {
     titel: "",
     untertitel: "",
   });
-
-  const token = React.useContext(TokenContext);
 
   const handleIsbnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsbn(event.target.value);
@@ -119,7 +117,7 @@ export default function BuchForm() {
       titel,
     };
 
-    writeBuch(formData, token);
+    writeBuch(formData);
 
     console.log(formData);
 
@@ -130,7 +128,7 @@ export default function BuchForm() {
     setPreis(0);
     setRabatt(undefined);
     setLieferbar(false);
-    setDatum(new Date().toLocaleDateString("de-DE"));
+    setDatum(new Date().toISOString().split("T")[0]);
     setHomepage("");
     setSchlagwoerter([]);
     setTitel({
@@ -143,12 +141,28 @@ export default function BuchForm() {
     <Box sx={{ maxWidth: 400 }}>
       <form onSubmit={handleSubmit}>
         <TextField
+          label="Titel"
+          value={titel.titel}
+          onChange={handleTitelChange}
+          fullWidth
+          required
+          margin="normal"
+        />
+        <TextField
+          label="Untertitel"
+          value={titel.untertitel}
+          onChange={handleUntertitelChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
           label="ISBN"
           value={isbn}
           onChange={handleIsbnChange}
           fullWidth
           required
           margin="normal"
+          helperText="bspw: 978-0-321-19368-1"
         />
         <TextField
           type="number"
@@ -163,6 +177,7 @@ export default function BuchForm() {
           value={rating || ""}
           onChange={handleRatingChange}
           margin="normal"
+          helperText="Bewertung zwischen 0 und 5"
         />
         <FormControl fullWidth required margin="normal">
           <InputLabel id="art-label">Art</InputLabel>
@@ -183,6 +198,7 @@ export default function BuchForm() {
           fullWidth
           required
           margin="normal"
+          helperText="Der Preis muss größer >= 0 sein"
         />
         <TextField
           label="Rabatt"
@@ -191,6 +207,7 @@ export default function BuchForm() {
           fullWidth
           required
           margin="normal"
+          helperText="Der Rabatt muss >= 0 und <= 1 sein"
         />
         <FormControlLabel
           control={
@@ -210,6 +227,7 @@ export default function BuchForm() {
           fullWidth
           required
           margin="normal"
+          helperText="Das Datum muss das Format yyyy-dd-mm besitzen"
         />
         <TextField
           label="Homepage"
@@ -218,6 +236,7 @@ export default function BuchForm() {
           fullWidth
           required
           margin="normal"
+          helperText="bspw: https://buch.erstellen"
         />
         <TextField
           label="Schlagwörter"
@@ -225,21 +244,7 @@ export default function BuchForm() {
           onChange={handleSchlagwoerterChange}
           fullWidth
           margin="normal"
-        />
-        <TextField
-          label="Titel"
-          value={titel.titel}
-          onChange={handleTitelChange}
-          fullWidth
-          required
-          margin="normal"
-        />
-        <TextField
-          label="Untertitel"
-          value={titel.untertitel}
-          onChange={handleUntertitelChange}
-          fullWidth
-          margin="normal"
+          helperText="Durch Kommas getrennt, bspw: JAVASCRIPT, TYPESCRIPT"
         />
         <Button type="submit" variant="contained" color="primary">
           Submit

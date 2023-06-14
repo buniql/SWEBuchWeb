@@ -17,7 +17,7 @@ const MediaCard: React.FC<MediaCardProps> = ({ buch }) => {
   const { id, titel, isbn, rating, lieferbar, datum, homepage } = buch;
 
   return (
-    <Grid item xs={12} sm={6} md={4} lg={2}>
+    <Grid item>
       <Card sx={{ width: 240 }}>
         <CardMedia
           sx={{ height: 140 }}

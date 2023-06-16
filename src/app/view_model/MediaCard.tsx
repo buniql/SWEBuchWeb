@@ -37,7 +37,14 @@ const MediaCard: React.FC<MediaCardProps> = ({ buch }) => {
             </div>
             <div>Lieferbar: {lieferbar ? "Ja" : "Nein"}</div>
             <div>Datum: {datum}</div>
-            <div>Homepage: {homepage}</div>
+            {homepage && (
+              <div>
+                Homepage:{" "}
+                <a href={homepage} style={{ color: "#3366CC" }}>
+                  {homepage}
+                </a>
+              </div>
+            )}
           </Typography>
         </CardContent>
       </Card>

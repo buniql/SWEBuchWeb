@@ -7,31 +7,31 @@
     "build": "npm run codegen && next build",
     "start": "next start -p 4200",
     "lint": "next lint",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "prettier": "prettier --cache --write \"src/**/*.ts\""
   },
   "dependencies": {
     "@emotion/react": "11.11.0",
     "@emotion/styled": "11.11.0",
-    "@fontsource/roboto": "5.0.1",
     "@graphql-codegen/cli": "4.0.0",
+    "@graphql-typed-document-node/core": "3.2.0",
     "@mui/icons-material": "5.11.16",
     "@mui/material": "5.13.2",
     "@mui/x-data-grid": "6.6.0",
-    "@types/node": "20.2.3",
     "@types/react": "18.2.7",
-    "@types/react-dom": "18.2.4",
     "apollo-boost": "0.4.9",
     "cookies-next": "2.1.2",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
+    "graphql": "15.8.0",
+    "http-proxy-middleware": "2.0.6",
     "next": "13.4.3",
+    "prettier": "2.8.8",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-router-dom": "6.12.1"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "4.0.0",
-    "@graphql-codegen/client-preset": "4.0.0",
     "typescript": "5.0.4"
   }
 }

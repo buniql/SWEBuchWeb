@@ -13,7 +13,9 @@ interface MediaCardProps {
   buch: Buch;
 }
 
+// MediaCard um die Daten eines Buches anzuzeigen
 const MediaCard: React.FC<MediaCardProps> = ({ buch }) => {
+  // Deconstruction um die für die Anzeige relevanten Werte zu erhalten
   const { id, titel, isbn, rating, lieferbar, datum, homepage } = buch;
 
   return (
@@ -43,13 +45,19 @@ const MediaCard: React.FC<MediaCardProps> = ({ buch }) => {
   );
 };
 
+// MediaCardGrid Komponente
 export default function MediaCardGrid({ search }: { search: string }) {
+  // useState als Ausgangspunkt für die asynchrone Abfrage der Daten
   const [buecherList, setBuecherList] = React.useState<Buch[]>([]);
 
+  // useEffect um den Seiteninhalt in Abhängigkeit zum Suchanfragen-String zu erhalten
   React.useEffect(() => {
     const fetchData = async () => {
       try {
+        // Bücher mittels GraphQL asynchron laden
         const buecherList: Buch[] = await getBuecher(search);
+
+        // erhaltene Bücher setzen
         setBuecherList(buecherList);
       } catch (error) {
         console.error(error);

@@ -13,19 +13,24 @@ import login from "../model/Login";
 
 const defaultTheme = createTheme();
 
+// LoginFormular Komponente
 export default function LoginForm() {
+  // Wenn auf den Anmelden-Button gedrückt wird
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
     try {
+      // Warten auf Antwort der GraphQL Login Mutation
       const result = await login(
         data.get("username") as string,
         data.get("password") as string
       );
 
+      // Ergebnis ist nicht fehlerhaft -> korrekter Login
       if (result !== undefined) {
         console.log(result);
+        // Weiterleiten zu /anlegen
         window.location.href = "/anlegen";
       }
     } catch (error) {

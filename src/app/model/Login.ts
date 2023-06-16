@@ -3,11 +3,14 @@ import ApolloClient from "apollo-boost";
 import { gql } from "apollo-boost";
 import { setCookie } from "cookies-next";
 
+// Apollo Client konfiguration
 const client = new ApolloClient({
-  uri: "https://localhost:3000/graphql",
+  uri: process.env.API_URI,
 });
 
+// GraphQL Mutation zum Einloggen
 const login = async (username: string, password: string) => {
+  // GraphQL-Mutationsabfrage mit Username & Passwort
   const loginMutation = gql`
     mutation Login($username: String!, $password: String!) {
       login(username: $username, password: $password) {
@@ -24,12 +27,15 @@ const login = async (username: string, password: string) => {
       variables: { username, password },
     });
 
+    // Erfolgreicher Login
     const loginResult: LoginResult = response.data.login;
 
+    // Token für Anlegen der Bücher setzten
     setCookie("auth", loginResult.token);
 
     return loginResult;
   } catch (error) {
+    // Wenn nicht erfolgreich -> nicht anmelden und fehler ausgeben
     console.log("Error logging in:", error);
     return undefined;
   }

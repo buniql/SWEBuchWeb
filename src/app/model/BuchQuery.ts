@@ -2,13 +2,14 @@ import { Buch } from "@/gql/graphql";
 import ApolloClient from "apollo-boost";
 import { gql } from "apollo-boost";
 
-//Apollo Client konfiguration - uri des Buch-Backends
+// Apollo Client konfiguration
 const client = new ApolloClient({
-  uri: "https://localhost:3000/graphql",
+  uri: process.env.API_URI,
 });
 
+// GraphQL Query zum Suchen der Bücher
 const getBuecher = async (queryString?: string) => {
-  //Wenn nach allen Büchern gesucht wird
+  // Wenn nach allen Büchern gesucht wird
   let buecherQuery = gql`
     query buecher_query {
       buecher {
@@ -30,7 +31,7 @@ const getBuecher = async (queryString?: string) => {
 
   if (queryString) {
     if (queryString.match(/^\d+$/)) {
-      //Wenn nur nach Zahlen gesucht wird -> Suche nach ID
+      // Wenn nur nach Zahlen gesucht wird -> Suche nach ID
       buecherQuery = gql`
         query buecher_query {
           buch(id: ${queryString}) {
@@ -50,7 +51,7 @@ const getBuecher = async (queryString?: string) => {
         }
       `;
     } else {
-      //Wenn nach einem Titel gesucht wird
+      // Wenn nach einem Titel gesucht wird
       buecherQuery = gql`
         query buecher_query {
           buecher(titel: "${queryString}") {
@@ -78,15 +79,15 @@ const getBuecher = async (queryString?: string) => {
     });
 
     if (Array.isArray(response.data.buecher)) {
-      //Wenn mehrere Bücher abgefragt werden (suche nach allen Büchern oder Titel)
+      // Wenn mehrere Bücher abgefragt werden (suche nach allen Büchern oder Titel)
       const buecherList: Buch[] = response.data.buecher;
       return buecherList;
     } else if (response.data.buch) {
-      //Wenn ein einzelnes Buch abgefragt wird (suche nach id)
+      // Wenn ein einzelnes Buch abgefragt wird (suche nach id)
       const buch: Buch = response.data.buch;
       return [buch];
     } else {
-      //Wenn nichts gefunden wurde
+      // Wenn nichts gefunden wurde
       return [];
     }
   } catch (error) {

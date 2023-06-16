@@ -4,10 +4,10 @@ import SearchBar from "./SearchBar";
 import DataTable from "./DataTable";
 
 export default function SearchBoxWithDataTable() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // Zustand für die Suchanfrage
 
   const handleSearchInputChange = (value: string) => {
-    setSearchQuery(value);
+    setSearchQuery(value); // Funktion zur Sucheingabe
   };
 
   return (

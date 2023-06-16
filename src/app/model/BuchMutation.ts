@@ -3,21 +3,25 @@ import ApolloClient from "apollo-boost";
 import { gql } from "apollo-boost";
 import { getCookie } from "cookies-next";
 
+// Apollo Client konfiguration
 const client = new ApolloClient({
-  uri: "https://localhost:3000/graphql",
+  uri: process.env.API_URI,
 });
 
+// GraphQL Mutation zum Erstellen eines Buchs
 const writeBuch = async (buch: BuchInput) => {
+  // GraphQL-Mutationsabfrage zum Erstellen eines Buchs
   const createBuchMutation = gql`
     mutation CreateBuch($buchInput: BuchInput!) {
       create(input: $buchInput)
     }
   `;
 
+  // Authentifizierungs-Token holen
   const authCookie = getCookie("auth");
-  console.log("authCookie: " + authCookie);
 
   try {
+    // Senden der Mutation an den Backend-Server
     const response = await client.mutate({
       mutation: createBuchMutation,
       variables: {
@@ -39,7 +43,7 @@ const writeBuch = async (buch: BuchInput) => {
       },
       context: {
         headers: {
-          authorization: `Bearer ${authCookie}`, // Include the token in the headers
+          authorization: `Bearer ${authCookie}`, // Token dem Header Daten hinzufügen
         },
       },
     });
@@ -48,7 +52,6 @@ const writeBuch = async (buch: BuchInput) => {
     console.log("Buch erstellt:", createdBuchId);
   } catch (error) {
     console.log("Error creating book:", error);
-    // Handle the error appropriately
   }
 };
 

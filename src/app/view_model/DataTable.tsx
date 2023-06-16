@@ -8,7 +8,7 @@ interface DataTableProps {
   search: string;
 }
 
-// Format der Tabelle/Zeilen
+// Format der Tabelle/Spalten
 function createRow(
   id: string,
   version: number,
@@ -35,6 +35,7 @@ function createRow(
   };
 }
 
+// Spalten anordnen, Werte zuweisen, Größe festlegen
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
   { field: "version", headerName: "Version", width: 100 },
@@ -48,15 +49,20 @@ const columns: GridColDef[] = [
   { field: "art", headerName: "Art", width: 200 },
 ];
 
+// DataTable Komponente
 const DataTable: React.FC<DataTableProps> = ({ search }) => {
+  // useState als Ausgangspunkt für die asynchrone Abfrage der Daten
   const [rows, setRows] = useState<any[]>([]);
 
+  // useEffect um den Seiteninhalt in Abhängigkeit zum Suchanfragen-String zu erhalten
   useEffect(() => {
     console.log("Fetch new Data");
     const fetchData = async () => {
       try {
+        // Bücher mittels GraphQL asynchron laden
         const buecherList: Buch[] = await getBuecher(search);
 
+        // erhaltene Bücher mappen
         const mappedRows = buecherList.map((buch) =>
           createRow(
             buch.id,
@@ -72,6 +78,7 @@ const DataTable: React.FC<DataTableProps> = ({ search }) => {
           )
         );
 
+        // Tabellen Daten setzen
         setRows(mappedRows);
       } catch (error) {
         console.error(error);

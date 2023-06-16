@@ -7,7 +7,6 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
-  FormHelperText,
   InputLabel,
   MenuItem,
   Rating,
@@ -16,7 +15,6 @@ import {
 } from "@mui/material";
 import {
   Art,
-  Buch,
   BuchInput,
   InputMaybe,
   Maybe,
@@ -26,6 +24,7 @@ import {
 import writeBuch from "../model/BuchMutation";
 
 export default function BuchForm() {
+  // Zustände der einzelnen Eingabeobjekte
   const [isbn, setIsbn] = React.useState<string>("");
   const [rating, setRating] = React.useState<number | null>(null);
   const [art, setArt] = React.useState<Maybe<Art>>(null);
@@ -44,6 +43,7 @@ export default function BuchForm() {
     untertitel: "",
   });
 
+  // Handler die bei Aktualisierung der Daten die Zustände verändern
   const handleIsbnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsbn(event.target.value);
   };
@@ -102,10 +102,11 @@ export default function BuchForm() {
     }));
   };
 
+  // Wenn die Daten abgesendet werden
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Do something with the form data
+    // Daten aus dem Formular sammeln
     const formData: BuchInput = {
       isbn,
       rating,
@@ -119,11 +120,12 @@ export default function BuchForm() {
       titel,
     };
 
+    // GraphQL Mutation zum Buch anlegen anstoßen
     writeBuch(formData);
 
     console.log(formData);
 
-    // Reset the form
+    // Formular zurücksetzen
     setIsbn("");
     setRating(null);
     setArt(null);
@@ -253,9 +255,11 @@ export default function BuchForm() {
           margin="normal"
           helperText="Durch Kommas getrennt, bspw: JAVASCRIPT, TYPESCRIPT"
         />
-        <Button type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Button type="submit" variant="contained" color="primary">
+            Absenden
+          </Button>
+        </Box>
       </form>
     </Box>
   );

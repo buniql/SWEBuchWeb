@@ -44,7 +44,16 @@ const columns: GridColDef[] = [
   { field: "rating", headerName: "Rating", width: 100 },
   { field: "lieferbar", headerName: "Lieferbar", width: 100 },
   { field: "datum", headerName: "Datum", width: 100 },
-  { field: "homepage", headerName: "Homepage", width: 200 },
+  {
+    field: "homepage",
+    headerName: "Homepage",
+    width: 200,
+    renderCell: (params) => (
+      <a href={params.value} style={{ color: "#3366CC" }}>
+        {params.value}
+      </a>
+    ),
+  },
   { field: "schlagwoerter", headerName: "Schlagwörter", width: 200 },
   { field: "art", headerName: "Art", width: 200 },
 ];

@@ -53,8 +53,8 @@ function ResponsiveAppBar() {
             <Box
               component="img"
               sx={{
-                height: 80,
-                width: 80,
+                height: 100,
+                width: 100,
               }}
               src="/buchweblogo.png"
             />

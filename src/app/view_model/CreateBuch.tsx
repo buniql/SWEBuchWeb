@@ -10,6 +10,7 @@ import {
   FormHelperText,
   InputLabel,
   MenuItem,
+  Rating,
   Select,
   SelectChangeEvent,
 } from "@mui/material";
@@ -26,7 +27,7 @@ import writeBuch from "../model/BuchMutation";
 
 export default function BuchForm() {
   const [isbn, setIsbn] = React.useState<string>("");
-  const [rating, setRating] = React.useState<number | undefined>();
+  const [rating, setRating] = React.useState<number | null>(null);
   const [art, setArt] = React.useState<Maybe<Art>>(null);
   const [preis, setPreis] =
     React.useState<InputMaybe<Scalars["Float"]["input"]>>();
@@ -48,7 +49,8 @@ export default function BuchForm() {
   };
 
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRating(Number(event.target.value));
+    const value = event.target.value !== "" ? Number(event.target.value) : null;
+    setRating(value);
   };
 
   const handleArtChange = (event: SelectChangeEvent<Art>) => {
@@ -123,7 +125,7 @@ export default function BuchForm() {
 
     // Reset the form
     setIsbn("");
-    setRating(undefined);
+    setRating(null);
     setArt(null);
     setPreis(0);
     setRabatt(undefined);
@@ -164,21 +166,18 @@ export default function BuchForm() {
           margin="normal"
           helperText="bspw: 978-0-321-19368-1"
         />
-        <TextField
-          type="number"
-          label="Rating"
-          name="rating"
-          inputProps={{
-            min: 0,
-            max: 5,
-          }}
-          fullWidth
-          required
-          value={rating || ""}
-          onChange={handleRatingChange}
-          margin="normal"
-          helperText="Bewertung zwischen 0 und 5"
-        />
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Rating
+            name="rating"
+            value={rating || 0}
+            precision={0.5}
+            onChange={(event, value) => setRating(value)}
+            size="large"
+            max={5}
+            sx={{ marginTop: "8px" }}
+            style={{ fontSize: 36 }}
+          />
+        </Box>
         <FormControl fullWidth required margin="normal">
           <InputLabel id="art-label">Art</InputLabel>
           <Select
@@ -209,17 +208,19 @@ export default function BuchForm() {
           margin="normal"
           helperText="Der Rabatt muss >= 0 und <= 1 sein"
         />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={lieferbar}
-              onChange={handleLieferbarChange}
-              name="lieferbar"
-              color="primary"
-            />
-          }
-          label="Lieferbar"
-        />
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={lieferbar}
+                onChange={handleLieferbarChange}
+                name="lieferbar"
+                color="primary"
+              />
+            }
+            label="Lieferbar"
+          />
+        </Box>
         <TextField
           label="Datum"
           value={datum}

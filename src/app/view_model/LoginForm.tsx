@@ -26,7 +26,7 @@ export default function LoginForm() {
 
       if (result !== undefined) {
         console.log(result);
-        window.location.href = "/create";
+        window.location.href = "/anlegen";
       }
     } catch (error) {
       console.log("Error logging in: " + error);

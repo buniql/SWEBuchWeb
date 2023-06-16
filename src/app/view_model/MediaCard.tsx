@@ -18,7 +18,7 @@ const MediaCard: React.FC<MediaCardProps> = ({ buch }) => {
 
   return (
     <Grid item>
-      <Card sx={{ width: 240 }}>
+      <Card sx={{ width: 260 }}>
         <CardMedia
           sx={{ height: 140 }}
           image="/buchbackground.jpg"

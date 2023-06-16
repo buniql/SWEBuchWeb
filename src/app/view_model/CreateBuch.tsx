@@ -200,6 +200,7 @@ export default function BuchForm() {
           helperText="Der Preis muss größer >= 0 sein"
         />
         <TextField
+          type="number"
           label="Rabatt"
           value={rabatt}
           onChange={handleRabattChange}
@@ -207,6 +208,11 @@ export default function BuchForm() {
           required
           margin="normal"
           helperText="Der Rabatt muss >= 0 und <= 1 sein"
+          inputProps={{
+            step: 0.01,
+            min: 0,
+            max: 1,
+          }}
         />
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <FormControlLabel

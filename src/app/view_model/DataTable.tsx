@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Buch } from "@/gql/graphql";
 import getBuecher from "../model/BuchQuery";
+import Link from "next/link";
 
 interface DataTableProps {
   search: string;
@@ -139,7 +140,7 @@ const DataTable: React.FC<DataTableProps> = ({
   });
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: "100%", width: "100%" }}>
       <DataGrid rows={rows} columns={selectedColumns} />
     </div>
   );

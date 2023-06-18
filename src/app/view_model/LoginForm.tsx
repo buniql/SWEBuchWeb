@@ -2,7 +2,6 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -13,8 +12,12 @@ import login from "../model/Login";
 
 const defaultTheme = createTheme();
 
+interface LoginFormProps {
+  onLogin: (username: string) => void,
+}
+
 // LoginFormular Komponente
-export default function LoginForm() {
+export default function LoginForm({ onLogin}: LoginFormProps) {
   // Wenn auf den Anmelden-Button gedrückt wird
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,8 +33,7 @@ export default function LoginForm() {
       // Ergebnis ist nicht fehlerhaft -> korrekter Login
       if (result !== undefined) {
         console.log(result);
-        // Weiterleiten zu /anlegen
-        window.location.href = "/anlegen";
+        onLogin(data.get("username") as string);
       }
     } catch (error) {
       console.log("Error logging in: " + error);
@@ -41,7 +43,6 @@ export default function LoginForm() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
@@ -63,6 +64,7 @@ export default function LoginForm() {
             sx={{ mt: 1 }}
           >
             <TextField
+
               margin="normal"
               required
               fullWidth

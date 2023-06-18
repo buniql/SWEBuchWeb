@@ -5,6 +5,9 @@ import Button from "@mui/material/Button";
 import {
   Box,
   Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
   FormControl,
   FormControlLabel,
   InputLabel,
@@ -42,6 +45,54 @@ export default function BuchForm() {
     titel: "",
     untertitel: "",
   });
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSend = () => {
+    setOpen(false);
+ // Daten aus dem Formular sammeln
+ const formData: BuchInput = {
+    isbn,
+    rating,
+    art,
+    preis,
+    rabatt,
+    lieferbar,
+    datum,
+    homepage,
+    schlagwoerter,
+    titel,
+  };
+
+  // GraphQL Mutation zum Buch anlegen anstoßen
+  writeBuch(formData);
+
+  console.log(formData);
+
+  // Formular zurücksetzen
+  setIsbn("");
+  setRating(null);
+  setArt(null);
+  setPreis(0);
+  setRabatt(undefined);
+  setLieferbar(false);
+  setDatum(new Date().toISOString().split("T")[0]);
+  setHomepage("");
+  setSchlagwoerter([]);
+  setTitel({
+    titel: "",
+    untertitel: "",
+  });
+};
+
 
   // Handler die bei Aktualisierung der Daten die Zustände verändern
   const handleIsbnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,49 +152,10 @@ export default function BuchForm() {
       untertitel: event.target.value,
     }));
   };
-
-  // Wenn die Daten abgesendet werden
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    // Daten aus dem Formular sammeln
-    const formData: BuchInput = {
-      isbn,
-      rating,
-      art,
-      preis,
-      rabatt,
-      lieferbar,
-      datum,
-      homepage,
-      schlagwoerter,
-      titel,
-    };
-
-    // GraphQL Mutation zum Buch anlegen anstoßen
-    writeBuch(formData);
-
-    console.log(formData);
-
-    // Formular zurücksetzen
-    setIsbn("");
-    setRating(null);
-    setArt(null);
-    setPreis(0);
-    setRabatt(undefined);
-    setLieferbar(false);
-    setDatum(new Date().toISOString().split("T")[0]);
-    setHomepage("");
-    setSchlagwoerter([]);
-    setTitel({
-      titel: "",
-      untertitel: "",
-    });
-  };
-
+   
   return (
-    <Box sx={{ maxWidth: 400 }}>
-      <form onSubmit={handleSubmit}>
+    <Dialog open={open} onClose={handleClose} sx={{ maxWidth: 400 }}>
+      <DialogContent>
         <TextField
           label="Titel"
           value={titel.titel}
@@ -168,18 +180,16 @@ export default function BuchForm() {
           margin="normal"
           helperText="bspw: 978-0-321-19368-1"
         />
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Rating
+        <Rating
             name="rating"
             value={rating || 0}
             precision={1}
             onChange={(event, value) => setRating(value)}
             size="large"
             max={5}
-            sx={{ marginTop: "8px" }}
+            sx={{ marginTop: "8px",display: "flex", justifyContent: "center" }}
             style={{ fontSize: 36 }}
-          />
-        </Box>
+        />
         <FormControl fullWidth required margin="normal">
           <InputLabel id="art-label">Art</InputLabel>
           <Select
@@ -260,7 +270,15 @@ export default function BuchForm() {
             Absenden
           </Button>
         </Box>
-      </form>
-    </Box>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={handleClose} color="primary">
+                Abbrechen
+            </Button>
+            <Button onClick={handleSend} color="primary">
+                Absenden
+            </Button>
+        </DialogActions>
+    </Dialog>
   );
 }

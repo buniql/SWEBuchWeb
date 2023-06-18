@@ -1,19 +1,12 @@
 "use client";
-import styles from "../page.module.css";
-import SearchBoxWithDataTable from "../view_model/SearchBoxWithDataTable";
-import ResponsiveAppBar from "../view_model/ResponsiveAppBar";
-import { useState } from "react";
+import React from 'react';
+import { SearchContext } from '../SearchContext';
+import DataTable from "../view_model/DataTable";
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <ResponsiveAppBar />
-      </div>
+  const searchValue = React.useContext(SearchContext); 
 
-      <div className={styles.main}>
-        <SearchBoxWithDataTable />
-      </div>
-    </main>
+  return (
+      <DataTable search={searchValue?.searchValue}></DataTable>
   );
 }

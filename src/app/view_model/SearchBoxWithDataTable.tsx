@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
-import SearchBar from "./SearchBar";
+import { useContext ,useState } from "react";
 import DataTable from "./DataTable";
 import { Checkbox, IconButton, Menu, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { SearchContext } from "../SearchContext";
 
 const checkboxValues = [
   "Titel",
@@ -17,14 +17,11 @@ const checkboxValues = [
 ];
 
 export default function SearchBoxWithDataTable() {
-  const [searchQuery, setSearchQuery] = useState(""); // Zustand für die Suchanfrage
+  const searchValue = useContext(SearchContext);
+
   const [selectedCheckboxes, setSelectedCheckboxes] =
     useState<string[]>(checkboxValues); // Zustand für die Checkboxen
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Zustand für das Burger Menü
-
-  const handleSearchInputChange = (value: string) => {
-    setSearchQuery(value); // Funktion zur Sucheingabe
-  };
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
@@ -47,9 +44,6 @@ export default function SearchBoxWithDataTable() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", padding: "20px" }}>
-      <div style={{ marginBottom: "20px" }}>
-        <SearchBar onSearch={handleSearchInputChange} />
-      </div>
       <div>
         <IconButton onClick={handleMenuOpen}>
           <MenuIcon />
@@ -74,7 +68,7 @@ export default function SearchBoxWithDataTable() {
       </div>
       <div style={{ flex: "1" }}>
         <DataTable
-          search={searchQuery}
+          search={searchValue?.searchValue}
           selectedCheckboxes={selectedCheckboxes}
         />
       </div>

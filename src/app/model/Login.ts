@@ -37,8 +37,9 @@ const login = async (username: string, password: string) => {
   } catch (error) {
     // Wenn nicht erfolgreich -> nicht anmelden und fehler ausgeben
     console.log("Error logging in:", error);
-    return undefined;
-  }
+    if (error instanceof Error) {
+      throw error.message;
+    }  }
 };
 
 export default login;

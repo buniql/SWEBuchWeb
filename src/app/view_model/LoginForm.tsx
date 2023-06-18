@@ -7,20 +7,20 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import login from "../model/Login";
 import { Dialog } from "@mui/material";
-
-const defaultTheme = createTheme();
+import { useState } from "react";
 
 interface LoginFormProps {
-  open: boolean,
-  onLogin: (username: string) => void,
-  onClose: () => void,
+  open: boolean;
+  onLogin: (username: string) => void;
+  onClose: () => void;
 }
 
 // LoginFormular Komponente
-export default function LoginForm({ open, onLogin, onClose}: LoginFormProps) {
+export default function LoginForm({ open, onLogin, onClose }: LoginFormProps) {
+  const [errorText, setErrorText] = useState<string | null>(null);
+
   // Wenn auf den Anmelden-Button gedrückt wird
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -32,14 +32,18 @@ export default function LoginForm({ open, onLogin, onClose}: LoginFormProps) {
         data.get("username") as string,
         data.get("password") as string
       );
-
+      console.log(result);
       // Ergebnis ist nicht fehlerhaft -> korrekter Login
       if (result !== undefined) {
         console.log(result);
         onLogin(data.get("username") as string);
+        setErrorText(null);
+      } else {
+        setErrorText("Error logging in: ");
       }
     } catch (error) {
       console.log("Error logging in: " + error);
+      setErrorText("" + error);
     }
   };
 
@@ -67,7 +71,7 @@ export default function LoginForm({ open, onLogin, onClose}: LoginFormProps) {
             sx={{ mt: 1 }}
           >
             <TextField
-
+              error={!!errorText}
               margin="normal"
               required
               fullWidth
@@ -78,6 +82,8 @@ export default function LoginForm({ open, onLogin, onClose}: LoginFormProps) {
               autoFocus
             />
             <TextField
+              error={!!errorText}
+              helperText={errorText}
               margin="normal"
               required
               fullWidth

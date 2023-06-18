@@ -95,40 +95,15 @@ export default function Navbar() {
     loggedInUser ? 
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={logoutId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
-    </Menu> : <Menu
-    anchorEl={anchorEl}
-    anchorOrigin={{
-      vertical: "top",
-      horizontal: "right",
-    }}
-    id={logoutId}
-    keepMounted
-    transformOrigin={{
-      vertical: "top",
-      horizontal: "right",
-    }}
-    open={isMenuOpen}
-    onClose={handleMenuClose}
-  >
-    <LoginForm onLogin={(username) => {
+    </Menu> : 
+    <LoginForm open={isMenuOpen} onClose={handleMenuClose} onLogin={(username) => {
       setLoggedInUser(username);
       handleMenuClose();
     }}/>
-    </Menu>
   );
 
   const renderFab = (

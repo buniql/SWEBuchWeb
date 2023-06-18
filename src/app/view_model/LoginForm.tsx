@@ -9,15 +9,18 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import login from "../model/Login";
+import { Dialog } from "@mui/material";
 
 const defaultTheme = createTheme();
 
 interface LoginFormProps {
+  open: boolean,
   onLogin: (username: string) => void,
+  onClose: () => void,
 }
 
 // LoginFormular Komponente
-export default function LoginForm({ onLogin}: LoginFormProps) {
+export default function LoginForm({ open, onLogin, onClose}: LoginFormProps) {
   // Wenn auf den Anmelden-Button gedrückt wird
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,7 +44,7 @@ export default function LoginForm({ onLogin}: LoginFormProps) {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <Dialog open={open} onClose={onClose}>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -95,6 +98,6 @@ export default function LoginForm({ onLogin}: LoginFormProps) {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
+    </Dialog>
   );
 }

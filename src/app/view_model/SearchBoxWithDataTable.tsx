@@ -1,5 +1,5 @@
 "use client";
-import { useContext ,useState } from "react";
+import { useContext, useState } from "react";
 import DataTable from "./DataTable";
 import { Checkbox, IconButton, Menu, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -48,23 +48,26 @@ export default function SearchBoxWithDataTable() {
         <IconButton onClick={handleMenuOpen}>
           <MenuIcon />
         </IconButton>
-        <Menu
-          anchorEl={document.getElementById("checkbox-menu")}
-          open={isMenuOpen}
-          onClose={handleMenuClose}
-        >
-          {checkboxValues.map((value) => (
-            <MenuItem key={value}>
-              <Checkbox
-                value={value}
-                checked={selectedCheckboxes.includes(value)}
-                onChange={handleCheckboxChange}
-                sx={{ fontFamily: "Arial" }}
-              />
-              {value}
-            </MenuItem>
-          ))}
-        </Menu>
+        {isMenuOpen && (
+          <Menu
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+            anchorReference="anchorPosition"
+            anchorPosition={{ top: 0, left: 0 }}
+          >
+            {checkboxValues.map((value) => (
+              <MenuItem key={value}>
+                <Checkbox
+                  value={value}
+                  checked={selectedCheckboxes.includes(value)}
+                  onChange={handleCheckboxChange}
+                  sx={{ fontFamily: "Arial" }}
+                />
+                {value}
+              </MenuItem>
+            ))}
+          </Menu>
+        )}
       </div>
       <div style={{ flex: "1" }}>
         <DataTable

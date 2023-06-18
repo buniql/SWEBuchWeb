@@ -7,24 +7,30 @@ const client = new ApolloClient({
   uri: process.env.API_URI,
 });
 
+const allProperties: string[] = [
+  "id",
+  "version",
+  "isbn",
+  "rating",
+  "lieferbar",
+  "datum",
+  "homepage",
+  "schlagwoerter",
+  "art",
+  "titel { titel }",
+];
+
 // GraphQL Query zum Suchen der Bücher
-const getBuecher = async (queryString?: string) => {
+const getBuecher = async (queryString?: string, properties?: string[]) => {
+  // Wenn wir Properties mitgeben, dann nehmen wir diese, sonst nehmen wir alle
+  const queryProperties =
+    properties && properties.length > 0 ? properties : allProperties;
+
   // Wenn nach allen Büchern gesucht wird
   let buecherQuery = gql`
     query buecher_query {
       buecher {
-        id
-        version
-        isbn
-        rating
-        lieferbar
-        datum
-        homepage
-        schlagwoerter
-        art
-        titel {
-          titel
-        }
+        ${queryProperties}
       }
     }
   `;
@@ -35,18 +41,7 @@ const getBuecher = async (queryString?: string) => {
       buecherQuery = gql`
         query buecher_query {
           buch(id: ${queryString}) {
-            id
-            version
-            isbn
-            rating
-            lieferbar
-            datum
-            homepage
-            schlagwoerter
-            art
-            titel {
-              titel
-            }
+            ${queryProperties}
           }
         }
       `;
@@ -55,18 +50,7 @@ const getBuecher = async (queryString?: string) => {
       buecherQuery = gql`
         query buecher_query {
           buecher(titel: "${queryString}") {
-            id
-            version
-            isbn
-            rating
-            lieferbar
-            datum
-            homepage
-            schlagwoerter
-            art
-            titel {
-              titel
-            }
+            ${queryProperties}
           }
         }
       `;

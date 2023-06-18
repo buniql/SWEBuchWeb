@@ -52,6 +52,15 @@ const MediaCard: React.FC<MediaCardProps> = ({ buch }) => {
   );
 };
 
+const mediaCardProperties: string[] = [
+  "isbn",
+  "rating",
+  "lieferbar",
+  "datum",
+  "homepage",
+  "titel { titel }",
+];
+
 // MediaCardGrid Komponente
 export default function MediaCardGrid({ search }: { search: string }) {
   // useState als Ausgangspunkt für die asynchrone Abfrage der Daten
@@ -62,7 +71,10 @@ export default function MediaCardGrid({ search }: { search: string }) {
     const fetchData = async () => {
       try {
         // Bücher mittels GraphQL asynchron laden
-        const buecherList: Buch[] = await getBuecher(search);
+        const buecherList: Buch[] = await getBuecher(
+          search,
+          mediaCardProperties
+        );
 
         // erhaltene Bücher setzen
         setBuecherList(buecherList);

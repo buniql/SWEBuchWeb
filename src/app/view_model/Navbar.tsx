@@ -49,7 +49,7 @@ export default function Navbar() {
       }
     }
     fetchLoggedInUser();
-  }, [setLoggedInUser]);
+  }, []);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [createAnchorEl, setCreateAnchorEl] =
@@ -79,8 +79,9 @@ export default function Navbar() {
     handleMenuClose();
   };
 
-  const handleLogin = () => {
-
+  function handleLogin(username: string)  {
+    setLoggedInUser(username);
+    
   };
   const createId = "create-form";
   const renderCreateMenu = (
@@ -140,7 +141,9 @@ export default function Navbar() {
     open={isMenuOpen}
     onClose={handleMenuClose}
   >
-    <LoginForm/>
+    <LoginForm onLogin={(username) => {
+      setLoggedInUser(username);
+    }}/>
     </Menu>
   );
 

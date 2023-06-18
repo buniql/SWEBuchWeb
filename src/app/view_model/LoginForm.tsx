@@ -12,8 +12,12 @@ import login from "../model/Login";
 
 const defaultTheme = createTheme();
 
+interface LoginFormProps {
+  onLogin: (username: string) => void,
+}
+
 // LoginFormular Komponente
-export default function LoginForm() {
+export default function LoginForm({ onLogin}: LoginFormProps) {
   // Wenn auf den Anmelden-Button gedrückt wird
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,7 +33,7 @@ export default function LoginForm() {
       // Ergebnis ist nicht fehlerhaft -> korrekter Login
       if (result !== undefined) {
         console.log(result);
-        return
+        onLogin(data.get("username") as string);
       }
     } catch (error) {
       console.log("Error logging in: " + error);
@@ -60,6 +64,7 @@ export default function LoginForm() {
             sx={{ mt: 1 }}
           >
             <TextField
+
               margin="normal"
               required
               fullWidth

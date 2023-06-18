@@ -189,7 +189,6 @@ export default function Navbar() {
                 href={`/tabelle`} // Set the href attribute
                 LinkComponent={Link}
               >
-                {searchValue}
                 <ListAltIcon />
               </IconButton>
               <IconButton

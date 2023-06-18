@@ -150,7 +150,7 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
   };
    
   return (
-    <Dialog open={open} onClose={onClose} sx={{ maxWidth: 400 }}>
+    <Dialog open={open} onClose={onClose} >
       <DialogContent>
         <TextField
           label="Titel"

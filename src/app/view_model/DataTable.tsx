@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Buch } from "@/gql/graphql";
 import getBuecher from "../model/BuchQuery";
+import Link from "next/link";
 
 interface DataTableProps {
   search: string;
@@ -49,9 +50,9 @@ const columns: GridColDef[] = [
     headerName: "Homepage",
     width: 200,
     renderCell: (params) => (
-      <a href={params.value} style={{ color: "#3366CC" }}>
+      <Link href={params.value} style={{ color: "#3366CC" }}>
         {params.value}
-      </a>
+      </Link>
     ),
   },
   { field: "schlagwoerter", headerName: "Schlagwörter", width: 200 },

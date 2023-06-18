@@ -26,7 +26,12 @@ import {
 } from "@/gql/graphql";
 import writeBuch from "../model/BuchMutation";
 
-export default function BuchForm() {
+interface BuchFormDialogProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
   // Zustände der einzelnen Eingabeobjekte
   const [isbn, setIsbn] = React.useState<string>("");
   const [rating, setRating] = React.useState<number | null>(null);
@@ -46,18 +51,8 @@ export default function BuchForm() {
     untertitel: "",
   });
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleSend = () => {
-    setOpen(false);
  // Daten aus dem Formular sammeln
  const formData: BuchInput = {
     isbn,
@@ -91,6 +86,7 @@ export default function BuchForm() {
     titel: "",
     untertitel: "",
   });
+  onClose();
 };
 
 
@@ -154,7 +150,7 @@ export default function BuchForm() {
   };
    
   return (
-    <Dialog open={open} onClose={handleClose} sx={{ maxWidth: 400 }}>
+    <Dialog open={open} onClose={onClose} sx={{ maxWidth: 400 }}>
       <DialogContent>
         <TextField
           label="Titel"
@@ -265,14 +261,9 @@ export default function BuchForm() {
           margin="normal"
           helperText="Durch Kommas getrennt, bspw: JAVASCRIPT, TYPESCRIPT"
         />
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button type="submit" variant="contained" color="primary">
-            Absenden
-          </Button>
-        </Box>
         </DialogContent>
         <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={onClose} color="primary">
                 Abbrechen
             </Button>
             <Button onClick={handleSend} color="primary">

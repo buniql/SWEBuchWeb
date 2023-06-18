@@ -85,26 +85,9 @@ export default function Navbar() {
   };
   const createId = "create-form";
   const renderCreateMenu = (
-    <Menu
-      anchorEl={createAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={createId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isCreateOpen}
-      onClose={handleCreateClose}
-      sx={{ height: "90vh"  }}
-    >
-      <Box sx={{px: 2}}>
-      <CreateBuchDialog/>
-      </Box>
-    </Menu>
+    
+      <CreateBuchDialog open={isCreateOpen} onClose={handleCreateClose} />
+      
   );
 
   const logoutId = "logout-menu";

@@ -73,8 +73,12 @@ const DataTable: React.FC<DataTableProps> = ({
           const row: any = {
             id: buch.id,
             version: buch.version,
-            titel: buch.titel.titel,
           };
+
+          if (selectedCheckboxes.includes("Titel")) {
+            row.titel = buch.titel.titel;
+          }
+
           selectedCheckboxes.forEach((checkbox) => {
             switch (checkbox) {
               case "ISBN":

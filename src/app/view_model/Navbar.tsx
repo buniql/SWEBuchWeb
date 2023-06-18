@@ -122,7 +122,13 @@ export default function Navbar() {
       <Box sx={{ flexGrow: 1, flexWrap: "nowrap" }}>
         <AppBar>
           <Toolbar>
-          
+          <IconButton
+                color="inherit"
+                href={`/`}
+                LinkComponent={Link}
+              >
+              <AutoStoriesIcon color="inherit" />
+              </IconButton>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -135,13 +141,7 @@ export default function Navbar() {
             </Search>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: "flex" }}>
-            <IconButton
-                color="inherit"
-                href={`/`}
-                LinkComponent={Link}
-              >
-              <AutoStoriesIcon color="inherit" />
-              </IconButton>
+            
               <IconButton
                 color="inherit"
                 href={`/tabelle`} // Set the href attribute

@@ -25,6 +25,13 @@ import {
   Titel,
 } from "@/gql/graphql";
 import writeBuch from "../model/BuchMutation";
+import { useState } from "react";
+import FormLabel from "@mui/material/FormLabel";
+import RadioGroup from "@mui/material/RadioGroup";
+import Radio from "@mui/material/Radio";
+import { Alert } from "@mui/material";
+import { SearchContext } from "../SearchContext";
+import { useContext } from "react";
 
 interface BuchFormDialogProps {
   open: boolean;
@@ -32,6 +39,13 @@ interface BuchFormDialogProps {
 }
 
 export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
+  const {searchValue, setSearchValue} = useContext(SearchContext);
+  const [errorText, setErrorText] = useState<string | null>(null);
+
+  const updateSearch = (value: string) => {
+    setSearchValue(value);
+  };
+
   // Zustände der einzelnen Eingabeobjekte
   const [isbn, setIsbn] = React.useState<string>("");
   const [rating, setRating] = React.useState<number | null>(null);
@@ -51,44 +65,54 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
     untertitel: "",
   });
 
+  const handleSend = async () => {
+    // Daten aus dem Formular sammeln
+    const formData: BuchInput = {
+      isbn,
+      rating,
+      art,
+      preis,
+      rabatt,
+      lieferbar,
+      datum,
+      homepage,
+      schlagwoerter,
+      titel,
+    };
+    console.log(formData);
 
-  const handleSend = () => {
- // Daten aus dem Formular sammeln
- const formData: BuchInput = {
-    isbn,
-    rating,
-    art,
-    preis,
-    rabatt,
-    lieferbar,
-    datum,
-    homepage,
-    schlagwoerter,
-    titel,
+    // GraphQL Mutation zum Buch anlegen anstoßen
+    try {
+      await writeBuch(formData);
+      updateSearch(titel.titel);
+      handleClose();
+    } catch (error) {
+      setErrorText("" + error);
+    }
   };
 
-  // GraphQL Mutation zum Buch anlegen anstoßen
-  writeBuch(formData);
+  const handleClose = () => {
+    setErrorText(null);
+    resetForm();
+    onClose();
+  };
 
-  console.log(formData);
-
-  // Formular zurücksetzen
-  setIsbn("");
-  setRating(null);
-  setArt(null);
-  setPreis(0);
-  setRabatt(undefined);
-  setLieferbar(false);
-  setDatum(new Date().toISOString().split("T")[0]);
-  setHomepage("");
-  setSchlagwoerter([]);
-  setTitel({
-    titel: "",
-    untertitel: "",
-  });
-  onClose();
-};
-
+  const resetForm = () => {
+    // Formular zurücksetzen
+    setIsbn("");
+    setRating(null);
+    setArt(null);
+    setPreis(null);
+    setRabatt(undefined);
+    setLieferbar(false);
+    setDatum(new Date().toISOString().split("T")[0]);
+    setHomepage("");
+    setSchlagwoerter([]);
+    setTitel({
+      titel: "",
+      untertitel: "",
+    });
+  };
 
   // Handler die bei Aktualisierung der Daten die Zustände verändern
   const handleIsbnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,7 +133,10 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
   };
 
   const handleRabattChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRabatt(Number(event.target.value));
+    let value = Number(event.target.value);
+    if (value < 0) value = 0;
+    if (value > 1) value = 1;
+    setRabatt(value);
   };
 
   const handleLieferbarChange = (
@@ -148,9 +175,11 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
       untertitel: event.target.value,
     }));
   };
-   
+
   return (
-    <Dialog open={open} onClose={onClose} >
+    <Dialog open={open} onClose={handleClose}>
+            {errorText && <Alert severity="error">{errorText}</Alert>}
+
       <DialogContent>
         <TextField
           label="Titel"
@@ -158,14 +187,14 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
           onChange={handleTitelChange}
           fullWidth
           required
-          margin="normal"
+          margin="dense"
         />
         <TextField
           label="Untertitel"
           value={titel.untertitel}
           onChange={handleUntertitelChange}
           fullWidth
-          margin="normal"
+          margin="dense"
         />
         <TextField
           label="ISBN"
@@ -173,39 +202,50 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
           onChange={handleIsbnChange}
           fullWidth
           required
-          margin="normal"
+          margin="dense"
           helperText="bspw: 978-0-321-19368-1"
         />
         <Rating
-            name="rating"
-            value={rating || 0}
-            precision={1}
-            onChange={(event, value) => setRating(value)}
-            size="large"
-            max={5}
-            sx={{ marginTop: "8px",display: "flex", justifyContent: "center" }}
-            style={{ fontSize: 36 }}
+          name="rating"
+          value={rating || 0}
+          precision={1}
+          onChange={(event, value) => setRating(value)}
+          size="large"
+          max={5}
+          style={{ fontSize: 36 }}
         />
-        <FormControl fullWidth required margin="normal">
-          <InputLabel id="art-label">Art</InputLabel>
-          <Select
-            labelId="art-label"
-            id="art"
-            value={art || ""}
-            onChange={handleArtChange}
-          >
-            <MenuItem value={Art.Druckausgabe}>DRUCKAUSGABE</MenuItem>
-            <MenuItem value={Art.Kindle}>KINDLE</MenuItem>
-          </Select>
-        </FormControl>
+        <FormLabel component="legend">Art</FormLabel>
+        <RadioGroup
+          aria-label="art"
+          name="art"
+          value={art || ""}
+          onChange={handleArtChange}
+          row
+        >
+          <FormControlLabel
+            value={Art.Druckausgabe}
+            control={<Radio />}
+            label="DRUCKAUSGABE"
+          />
+          <FormControlLabel
+            value={Art.Kindle}
+            control={<Radio />}
+            label="KINDLE"
+          />
+        </RadioGroup>
         <TextField
+          type="number"
           label="Preis"
           value={preis}
           onChange={handlePreisChange}
           fullWidth
           required
-          margin="normal"
+          margin="dense"
           helperText="Der Preis muss größer >= 0 sein"
+          inputProps={{
+            step: 10,
+            min: 0,
+          }}
         />
         <TextField
           type="number"
@@ -214,7 +254,7 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
           onChange={handleRabattChange}
           fullWidth
           required
-          margin="normal"
+          margin="dense"
           helperText="Der Rabatt muss >= 0 und <= 1 sein"
           inputProps={{
             step: 0.01,
@@ -222,35 +262,34 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
             max: 1,
           }}
         />
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={lieferbar}
-                onChange={handleLieferbarChange}
-                name="lieferbar"
-                color="primary"
-              />
-            }
-            label="Lieferbar"
-          />
-        </Box>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={lieferbar}
+              onChange={handleLieferbarChange}
+              name="lieferbar"
+              color="primary"
+            />
+          }
+          label="Lieferbar"
+        />
         <TextField
           label="Datum"
           value={datum}
           onChange={handleDatumChange}
           fullWidth
           required
-          margin="normal"
+          margin="dense"
           helperText="Das Datum muss das Format yyyy-dd-mm besitzen"
         />
+        
         <TextField
           label="Homepage"
           value={homepage}
           onChange={handleHomepageChange}
           fullWidth
           required
-          margin="normal"
+          margin="dense"
           helperText="bspw: https://buch.erstellen"
         />
         <TextField
@@ -258,18 +297,19 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
           value={schlagwoerter.join(", ")}
           onChange={handleSchlagwoerterChange}
           fullWidth
-          margin="normal"
+          margin="dense"
           helperText="Durch Kommas getrennt, bspw: JAVASCRIPT, TYPESCRIPT"
         />
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={onClose} color="primary">
-                Abbrechen
-            </Button>
-            <Button onClick={handleSend} color="primary">
-                Absenden
-            </Button>
-        </DialogActions>
+      </DialogContent>
+      
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          Abbrechen
+        </Button>
+        <Button onClick={handleSend} color="primary">
+          Absenden
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }

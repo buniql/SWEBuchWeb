@@ -143,6 +143,7 @@ export default function Navbar() {
   >
     <LoginForm onLogin={(username) => {
       setLoggedInUser(username);
+      handleMenuClose();
     }}/>
     </Menu>
   );

@@ -8,6 +8,7 @@ import Grid from "@mui/material/Grid";
 import Rating from "@mui/material/Rating";
 import { Buch } from "@/gql/graphql";
 import getBuecher from "../model/BuchQuery";
+import Link from "next/link";
 
 interface MediaCardProps {
   buch: Buch;
@@ -20,9 +21,12 @@ const MediaCard: React.FC<MediaCardProps> = ({ buch }) => {
 
   return (
     <Grid item>
-      <Card sx={{ width: 260 }}>
+      <Card variant="outlined" sx={{ height: 300, width: 200, 
+        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+        borderRadius: '16px 16px 16px 16px' }}
+>
         <CardMedia
-          sx={{ height: 140 }}
+          sx={{ height: 100, width: 200 }}
           image="/buchbackground.jpg"
           title={titel.titel}
         />
@@ -31,21 +35,24 @@ const MediaCard: React.FC<MediaCardProps> = ({ buch }) => {
             {titel.titel}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <div>{isbn}</div>
-            <div>
-              <Rating name="rating" value={rating} precision={0.5} readOnly />
-            </div>
-            <div>Lieferbar: {lieferbar ? "Ja" : "Nein"}</div>
-            <div>Datum: {datum}</div>
-            {homepage && (
-              <div>
-                Homepage:{" "}
-                <a href={homepage} style={{ color: "#3366CC" }}>
-                  {homepage}
-                </a>
-              </div>
-            )}
+            {isbn}
           </Typography>
+          <Rating name="rating" value={rating} precision={1} readOnly />
+
+          <Typography variant="body2" color="text.secondary">
+            Lieferbar: {lieferbar ? "Ja" : "Nein"}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Datum: {datum}
+          </Typography>
+            {homepage && (
+              <Typography variant="body2" color="text.secondary">
+                Homepage:{" "}
+                <Link href={homepage} color="#3366CC">
+                  {homepage}
+                </Link>
+              </Typography>
+            )}
         </CardContent>
       </Card>
     </Grid>

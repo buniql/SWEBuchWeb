@@ -172,7 +172,7 @@ export default function BuchForm() {
           <Rating
             name="rating"
             value={rating || 0}
-            precision={0.5}
+            precision={1}
             onChange={(event, value) => setRating(value)}
             size="large"
             max={5}

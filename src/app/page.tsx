@@ -1,17 +1,15 @@
-import styles from "./page.module.css";
-import ResponsiveAppBar from "./view_model/ResponsiveAppBar";
-import SearchBoxWithMediaCards from "./view_model/SearchBoxWithMediaCards";
+import React from 'react';
+import SearchContext from './SearchContext';
+import MediaCardGrid from './view_model/MediaCard';
+
 
 export default function Home({ data }: any) {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <ResponsiveAppBar />
-      </div>
+  const searchValue = React.useContext(SearchContext); 
 
-      <div className={styles.main}>
-        <SearchBoxWithMediaCards />
-      </div>
+  return (
+    <main >
+        <MediaCardGrid search={searchValue?.searchValue}></MediaCardGrid>
+
     </main>
   );
 }

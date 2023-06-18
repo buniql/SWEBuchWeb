@@ -6,4 +6,14 @@ const SearchContext = React.createContext({
   setSearchValue: (value: string) => {},
 });
 
-export default SearchContext;
+function SearchProvider({ children }: { children: React.ReactNode }) {
+  const [searchValue, setSearchValue] = React.useState<string>('');
+
+  return (
+    <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+      {children}
+    </SearchContext.Provider>
+  );
+}
+
+export {SearchContext , SearchProvider};

@@ -1,6 +1,7 @@
 import { CssBaseline, Container } from '../components/mui'
 import { Inter } from 'next/font/google'
 import Navbar from './view_model/Navbar'
+import { SearchProvider } from './SearchContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <CssBaseline />
       <body>
+        <SearchProvider>
         <Container sx={[{
           pt:  { xs: 9, sm: 11 }}]}>
             <Navbar/>
@@ -25,6 +27,7 @@ export default function RootLayout({
                 {children}
               </main>
         </Container>
+        </SearchProvider>
       </body>
     </html>
   )

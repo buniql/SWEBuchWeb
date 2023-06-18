@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -18,7 +18,7 @@ import CreateBuchDialog from "../view_model/CreateBuchDialog";
 import { Search, SearchIconWrapper, StyledInputBase } from "../theme";
 import { Dialog } from "@mui/material";
 import Container from "@mui/material/Container/Container";
-import SearchContext from "../SearchContext";
+import { SearchContext } from "../SearchContext";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import { getCookie , hasCookie , deleteCookie } from "cookies-next";
 import jwt from "jsonwebtoken";
@@ -26,12 +26,18 @@ import LoginForm from "./LoginForm";
 
 export default function Navbar() {
   
-  const [searchValue, setSearchValue] = useState("");
+  const { searchValue, setSearchValue } = useContext(SearchContext);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value);
+
     setSearchValue(event.target.value); // Wert der Eingabe aus dem Event extrahieren
   };
   const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
+
+  useEffect(() => {
+    console.log(searchValue);
+}, [searchValue]);
 
   useEffect(() => {
     async function fetchLoggedInUser() {
@@ -43,7 +49,7 @@ export default function Navbar() {
       }
     }
     fetchLoggedInUser();
-  }, []);
+  }, [setLoggedInUser]);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [createAnchorEl, setCreateAnchorEl] =
@@ -151,7 +157,6 @@ export default function Navbar() {
   )
 
   return (
-    <SearchContext.Provider value={{ searchValue, setSearchValue }}>
       <Box sx={{ flexGrow: 1, flexWrap: "nowrap" }}>
         <AppBar>
           <Toolbar>
@@ -180,6 +185,7 @@ export default function Navbar() {
                 href={`/tabelle`} // Set the href attribute
                 LinkComponent={Link}
               >
+                {searchValue}
                 <ListAltIcon />
               </IconButton>
               <IconButton
@@ -200,6 +206,5 @@ export default function Navbar() {
         {renderCreateMenu}
         {renderFab}
       </Box>
-    </SearchContext.Provider>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import SearchContext from '../SearchContext';
+import { SearchContext } from '../SearchContext';
 import DataTable from "../view_model/DataTable";
 
 export default function Home() {

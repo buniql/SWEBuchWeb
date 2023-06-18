@@ -52,6 +52,7 @@ const MediaCard: React.FC<MediaCardProps> = ({ buch }) => {
   );
 };
 
+// für MediaCard benötigte Properties zur Übergabe an GraphQL -> nicht overfetchen
 const mediaCardProperties: string[] = [
   "isbn",
   "rating",

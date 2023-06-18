@@ -1,11 +1,8 @@
 "use client";
-import styles from "../page.module.css";
-import LoginForm from "../view_model/LoginForm";
+import CreateBuchDialog from "../view_model/CreateBuchDialog";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <LoginForm />
-    </main>
+      <CreateBuchDialog />
   );
 }

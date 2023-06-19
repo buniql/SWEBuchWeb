@@ -51,7 +51,6 @@ const writeBuch = async (buch: BuchInput) => {
     const createdBuchId = response.data.create.id;
     console.log("Buch erstellt:", createdBuchId);
   } catch (error) {
-
     if (error instanceof Error) {
       throw error.message;
     } else {

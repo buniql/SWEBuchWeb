@@ -39,7 +39,8 @@ const login = async (username: string, password: string) => {
     console.log("Error logging in:", error);
     if (error instanceof Error) {
       throw error.message;
-    }  }
+    }
+  }
 };
 
 export default login;

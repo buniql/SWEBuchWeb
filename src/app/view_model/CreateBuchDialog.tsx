@@ -85,6 +85,7 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
     try {
       await writeBuch(formData);
       updateSearch(titel.titel);
+      window.location.reload();
       handleClose();
     } catch (error) {
       setErrorText("" + error);

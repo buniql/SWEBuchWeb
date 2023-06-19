@@ -29,15 +29,9 @@ export default function Navbar() {
   const { searchValue, setSearchValue } = useContext(SearchContext);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
-
     setSearchValue(event.target.value); // Wert der Eingabe aus dem Event extrahieren
   };
   const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log(searchValue);
-}, [searchValue]);
 
   useEffect(() => {
     async function fetchLoggedInUser() {

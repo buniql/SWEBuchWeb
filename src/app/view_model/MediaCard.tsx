@@ -20,13 +20,19 @@ const MediaCard: React.FC<MediaCardProps> = ({ buch }) => {
   const { id, titel, isbn, rating, lieferbar, datum, homepage } = buch;
 
   return (
-    <Grid item>
-      <Card variant="outlined" sx={{ height: 300, width: 200, 
-        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-        borderRadius: '16px 16px 16px 16px' }}
->
+    <Grid item xs={12} sm={6} md={4} lg={3}>
+      <Card
+        variant="outlined"
+        sx={{
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+          borderRadius: "16px 16px 16px 16px",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <CardMedia
-          sx={{ height: 100, width: 200 }}
+          sx={{ height: 0, paddingTop: "56.25%" }}
           image="/buchbackground.jpg"
           title={titel.titel}
         />
@@ -45,14 +51,14 @@ const MediaCard: React.FC<MediaCardProps> = ({ buch }) => {
           <Typography variant="body2" color="text.secondary">
             Datum: {datum}
           </Typography>
-            {homepage && (
-              <Typography variant="body2" color="text.secondary">
-                Homepage:{" "}
-                <Link href={homepage} color="#3366CC">
-                  {homepage}
-                </Link>
-              </Typography>
-            )}
+          {homepage && (
+            <Typography variant="body2" color="text.secondary">
+              Homepage:{" "}
+              <Link href={homepage} color="#3366CC">
+                {homepage}
+              </Link>
+            </Typography>
+          )}
         </CardContent>
       </Card>
     </Grid>
@@ -97,7 +103,7 @@ export default function MediaCardGrid({ search }: { search: string }) {
   return (
     <Grid container spacing={2}>
       {buecherList.map((buch) => (
-        <MediaCard key={buch.id} buch={buch} />
+        <MediaCard key={buch.isbn} buch={buch} />
       ))}
     </Grid>
   );

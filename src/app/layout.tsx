@@ -1,9 +1,7 @@
 import { CssBaseline, Container } from '../components/mui'
-import { Inter } from 'next/font/google'
 import Navbar from './view_model/Navbar'
 import { SearchProvider } from './SearchContext'
 
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Buch',

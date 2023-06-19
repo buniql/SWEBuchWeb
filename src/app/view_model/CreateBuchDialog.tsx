@@ -30,8 +30,7 @@ import FormLabel from "@mui/material/FormLabel";
 import RadioGroup from "@mui/material/RadioGroup";
 import Radio from "@mui/material/Radio";
 import { Alert } from "@mui/material";
-import { SearchContext } from "../SearchContext";
-import { useContext } from "react";
+
 
 interface BuchFormDialogProps {
   open: boolean;
@@ -39,12 +38,9 @@ interface BuchFormDialogProps {
 }
 
 export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
-  const {searchValue, setSearchValue} = useContext(SearchContext);
   const [errorText, setErrorText] = useState<string | null>(null);
 
-  const updateSearch = (value: string) => {
-    setSearchValue(value);
-  };
+  
 
   // Zustände der einzelnen Eingabeobjekte
   const [isbn, setIsbn] = React.useState<string>("");
@@ -84,7 +80,6 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
     // GraphQL Mutation zum Buch anlegen anstoßen
     try {
       await writeBuch(formData);
-      updateSearch(titel.titel);
       window.location.reload();
       handleClose();
     } catch (error) {

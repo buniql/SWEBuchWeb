@@ -32,7 +32,6 @@ export default function LoginForm({ open, onLogin, onClose }: LoginFormProps) {
         data.get("username") as string,
         data.get("password") as string
       );
-      console.log(result);
       // Ergebnis ist nicht fehlerhaft -> korrekter Login
       if (result !== undefined) {
         console.log(result);

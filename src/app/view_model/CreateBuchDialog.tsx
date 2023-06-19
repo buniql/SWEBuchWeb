@@ -51,9 +51,9 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
   const [rating, setRating] = React.useState<number | null>(null);
   const [art, setArt] = React.useState<Maybe<Art>>(null);
   const [preis, setPreis] =
-    React.useState<InputMaybe<Scalars["Float"]["input"]>>();
+    React.useState<InputMaybe<Scalars["Float"]["input"]>>(0);
   const [rabatt, setRabatt] =
-    React.useState<InputMaybe<Scalars["Float"]["input"]>>();
+    React.useState<InputMaybe<Scalars["Float"]["input"]>>(0);
   const [lieferbar, setLieferbar] = React.useState<boolean>(false);
   const [datum, setDatum] = React.useState<string>(
     new Date().toISOString().split("T")[0]
@@ -103,8 +103,8 @@ export default function BuchForm({ open, onClose }: BuchFormDialogProps) {
     setIsbn("");
     setRating(null);
     setArt(null);
-    setPreis(null);
-    setRabatt(undefined);
+    setPreis(0);
+    setRabatt(0);
     setLieferbar(false);
     setDatum(new Date().toISOString().split("T")[0]);
     setHomepage("");
